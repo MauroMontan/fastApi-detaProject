@@ -2,6 +2,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 
 def initCors(app):
+    
+   # Here goes allowed connections
+
 
     origins = ["*"]
 
