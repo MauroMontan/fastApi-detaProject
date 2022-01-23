@@ -4,15 +4,25 @@ from deta import Deta
 
 load_dotenv()
 
-# if you don´t want to use .env, just add it as string.
+# if you don´t want to use .env, just add it as string. NOT RECOMMENDED
 #  example "PROJECTKEY = "FIdwji3'2n"
-# WARNING: USING THE PROJECT KEY AS STRING IS DANGEROUS 
 
 PROJECTKEY = os.getenv("PROJECTKEY")
 
 deta = Deta(PROJECTKEY)
 
-# add any database you want
-database = {
-    "USERS": deta.Base("USERS"),
-}
+
+class Database:
+    # add any database you want in
+    tables = {
+        "USERS": deta.Base("USERS"),
+    }
+
+    def __init__(self) -> None:
+        pass
+
+    def table(self, databaseName: str):
+        return self.tables[databaseName]
+
+
+db = Database()

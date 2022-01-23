@@ -1,11 +1,9 @@
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 
-def initCors(app):
-    
+def initCors(app: FastAPI):
    # Here goes allowed connections
-
-
     origins = ["*"]
 
     app.add_middleware(
@@ -15,4 +13,3 @@ def initCors(app):
         allow_methods=["*"],
         allow_headers=["*"],
     )
-

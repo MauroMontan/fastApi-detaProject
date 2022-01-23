@@ -3,7 +3,7 @@ from fastapi.exceptions import HTTPException
 from fastapi.params import Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
-from ..database.database import database
+from ..database.database import db
 from ..security.hashing import Hash
 from ..security.token import create_access_token
 
@@ -11,15 +11,18 @@ from ..security.token import create_access_token
 router = APIRouter(prefix="/login", tags=["login"])
 
 
-# WARNING DO NOT  ERASE ANY CODE YOU HAVE NOT WRITE
+#! DO NOT ERASE ANY CODE YOU HAVE NOT WRITE
 
 @router.post("/")
 async def login(request: OAuth2PasswordRequestForm = Depends()):
 
-    user = database["USERS"].fetch({"email": request.username})._items
+    user = db.table("USERS").fetch({"email": request.username})._items
 
-    password = user[0]["password"]
-    email = user[0]["email"]
+    try:
+        password = user[0]["password"]
+        email = user[0]["email"]
+    except:
+        password = str()
 
     if not user:
         raise HTTPException(
